@@ -7,23 +7,20 @@
 //
 
 import UIKit
+import CoreData
 
 class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        itemArray = [Item(title: "Philips Bulb"),
-//                     Item(title: "Xiaomi Power Strip"),
-//                     Item(title: "Xiaomi LED USB")]
-        
         loadItems()
     }
 
-    //MARK - TableView DataSource methods
+    //MARK: - TableView DataSource methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -40,10 +37,20 @@ class ToDoListViewController: UITableViewController {
         return cell
     }
     
-    //MARK - TableView Delegate methods
+    //MARK: - TableView Delegate methods
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        //#1
+//        let done = itemArray[indexPath.row].done
+//
+//        if done == false {
+//            itemArray[indexPath.row].setValue(true, forKey: "done")
+//        } else {
+//            itemArray[indexPath.row].setValue(false, forKey: "done")
+//        }
+        
+        //#2
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         saveItems()
@@ -51,7 +58,7 @@ class ToDoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    //MARK - Add new items
+    //MARK: - Add new items
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -61,10 +68,14 @@ class ToDoListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             guard let titleItem = textField.text else { return }
-            let newItem = Item(title: titleItem)
+            
+            let newItem = Item(context: self.context)
+            newItem.title = titleItem
+            newItem.done = false
+
             self.itemArray.append(newItem)
+            
             self.saveItems()
-            self.tableView.reloadData()
         }
         
         alert.addAction(action)
@@ -77,33 +88,33 @@ class ToDoListViewController: UITableViewController {
         present(alert, animated: true)
     }
     
-    //MARK - Model Manipulation Methods
+    //MARK: - Model Manipulation Methods
     
-    //Save items in the Items.plist file on our device
+    //Save items in Core Data on our device
     
     fileprivate func saveItems() {
-        let encoder = PropertyListEncoder()
         
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("Error encoding item array, ", error)
+            print("Error saving context, ", error)
         }
+        
+        tableView.reloadData()
     }
     
-    //Load items in the Items.plist file on our device
+    //Load items in Core Data on our device
     
     fileprivate func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
         
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("Error decoding item array, ", error)
-            }
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context, ", error)
         }
+        
+        tableView.reloadData()
     }
 }
 

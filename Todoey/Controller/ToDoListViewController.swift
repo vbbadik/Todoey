@@ -11,7 +11,12 @@ import CoreData
 
 class ToDoListViewController: UITableViewController {
     
-    var itemArray = [Item]()
+    var selectedCategory: Category? {
+        didSet {
+            loadItems()
+        }
+    }
+    var items = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -20,20 +25,19 @@ class ToDoListViewController: UITableViewController {
         super.viewDidLoad()
         
         searchBar.delegate = self
-        
-        loadItems()
+
     }
 
     //MARK: - TableView DataSource methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoImemCell", for: indexPath)
         
-        let item = itemArray[indexPath.row]
+        let item = items[indexPath.row]
         
         cell.textLabel?.text = item.title
         cell.accessoryType = item.done ? .checkmark : .none
@@ -55,7 +59,7 @@ class ToDoListViewController: UITableViewController {
 //        }
         
         //#2
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        items[indexPath.row].done = !items[indexPath.row].done
         
         saveItems()
         
@@ -76,8 +80,9 @@ class ToDoListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = titleItem
             newItem.done = false
-
-            self.itemArray.append(newItem)
+            newItem.parentCategory = self.selectedCategory
+            
+            self.items.append(newItem)
             
             self.saveItems()
         }
@@ -92,7 +97,7 @@ class ToDoListViewController: UITableViewController {
         present(alert, animated: true)
     }
     
-    //MARK: - Model Manipulation Methods
+    //MARK: - Model Manipulation methods
     
     //Save items in Core Data on our device
     
@@ -109,10 +114,18 @@ class ToDoListViewController: UITableViewController {
     
     //Load items in Core Data on our device
     
-    fileprivate func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    fileprivate func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
 
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
         do {
-            itemArray = try context.fetch(request)
+            items = try context.fetch(request)
         } catch {
             print("Error fetching data from context, ", error)
         }
@@ -128,10 +141,11 @@ extension ToDoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         let request: NSFetchRequest<Item> = Item.fetchRequest()
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+
+        loadItems(with: request, predicate: predicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

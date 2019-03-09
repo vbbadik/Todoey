@@ -5,12 +5,21 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="parentCategory" inverseEntity="Item" syncable="YES"/>
     </entity>
     <entity name="Item" representedClassName=".Item" syncable="YES" codeGenerationType="class">
+<<<<<<< HEAD
         <attribute name="done" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+=======
+        <attribute name="done" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+>>>>>>> data-save
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="items" inverseEntity="Category" syncable="YES"/>
     </entity>
     <elements>
+<<<<<<< HEAD
         <element name="Item" positionX="-45" positionY="0" width="128" height="88"/>
         <element name="Category" positionX="-276.59765625" positionY="-0.02734375" width="128" height="73"/>
+=======
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Category" positionX="-270.5078125" positionY="-17.671875" width="128" height="73"/>
+>>>>>>> data-save
     </elements>
 </model>

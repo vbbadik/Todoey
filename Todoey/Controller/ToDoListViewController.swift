@@ -16,7 +16,12 @@ class ToDoListViewController: UITableViewController {
             loadItems()
         }
     }
+<<<<<<< HEAD
     var items = [Item]()
+=======
+    
+    var itemArray = [Item]()
+>>>>>>> data-save
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -24,6 +29,13 @@ class ToDoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< HEAD
+=======
+//        itemArray = [Item(title: "Philips Bulb"),
+//                     Item(title: "Xiaomi Power Strip"),
+//                     Item(title: "Xiaomi LED USB")]
+        
+>>>>>>> data-save
         searchBar.delegate = self
 
     }
@@ -53,13 +65,24 @@ class ToDoListViewController: UITableViewController {
 //        let done = itemArray[indexPath.row].done
 //
 //        if done == false {
+<<<<<<< HEAD
 //            itemArray[indexPath.row].setValue(true, forKey: "done")
 //        } else {
+=======
+//            itemArray[indexPath.row].setValue("Выполнено", forKey: "title")
+//            itemArray[indexPath.row].setValue(true, forKey: "done")
+//        } else {
+//            itemArray[indexPath.row].setValue("Не выполнено", forKey: "title")
+>>>>>>> data-save
 //            itemArray[indexPath.row].setValue(false, forKey: "done")
 //        }
         
         //#2
+<<<<<<< HEAD
         items[indexPath.row].done = !items[indexPath.row].done
+=======
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+>>>>>>> data-save
         
         saveItems()
         
@@ -82,8 +105,12 @@ class ToDoListViewController: UITableViewController {
             newItem.done = false
             newItem.parentCategory = self.selectedCategory
             
+<<<<<<< HEAD
             self.items.append(newItem)
             
+=======
+            self.itemArray.append(newItem)
+>>>>>>> data-save
             self.saveItems()
         }
         
@@ -97,7 +124,11 @@ class ToDoListViewController: UITableViewController {
         present(alert, animated: true)
     }
     
+<<<<<<< HEAD
     //MARK: - Model Manipulation methods
+=======
+    //MARK: - Model Manipulation Methods
+>>>>>>> data-save
     
     //Save items in Core Data on our device
     
@@ -108,13 +139,20 @@ class ToDoListViewController: UITableViewController {
         } catch {
             print("Error saving context, ", error)
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> data-save
         tableView.reloadData()
     }
     
     //Load items in Core Data on our device
     
+<<<<<<< HEAD
     fileprivate func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+=======
+    fileprivate func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(),  predicate: NSPredicate? = nil) {
+>>>>>>> data-save
 
         let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
 
@@ -125,7 +163,11 @@ class ToDoListViewController: UITableViewController {
         }
         
         do {
+<<<<<<< HEAD
             items = try context.fetch(request)
+=======
+            itemArray = try context.fetch(request)
+>>>>>>> data-save
         } catch {
             print("Error fetching data from context, ", error)
         }
@@ -137,14 +179,23 @@ class ToDoListViewController: UITableViewController {
 //MARK: - Search Bar methods
 
 extension ToDoListViewController: UISearchBarDelegate {
+<<<<<<< HEAD
     
+=======
+>>>>>>> data-save
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         let request: NSFetchRequest<Item> = Item.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+<<<<<<< HEAD
         
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
 
+=======
+    
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+>>>>>>> data-save
         loadItems(with: request, predicate: predicate)
     }
     
@@ -158,4 +209,8 @@ extension ToDoListViewController: UISearchBarDelegate {
             }
         }
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> data-save
 }

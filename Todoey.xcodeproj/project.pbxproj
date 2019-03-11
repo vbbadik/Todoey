@@ -13,13 +13,8 @@
 		2432126F2225249D00AEE267 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2432126E2225249D00AEE267 /* Assets.xcassets */; };
 		243212722225249D00AEE267 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 243212702225249D00AEE267 /* LaunchScreen.storyboard */; };
 		2432127A222561C000AEE267 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 24321279222561C000AEE267 /* .gitignore */; };
-<<<<<<< HEAD
 		243212B2223119AB00AEE267 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 243212B0223119AB00AEE267 /* DataModel.xcdatamodeld */; };
 		243212B42233C2A600AEE267 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243212B32233C2A600AEE267 /* CategoryViewController.swift */; };
-=======
-		243212AD222D63E400AEE267 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 243212AB222D63E400AEE267 /* DataModel.xcdatamodeld */; };
-		243212AF222FCB3200AEE267 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243212AE222FCB3200AEE267 /* CategoryViewController.swift */; };
->>>>>>> data-save
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,13 +26,8 @@
 		243212712225249D00AEE267 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		243212732225249D00AEE267 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24321279222561C000AEE267 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		243212B1223119AB00AEE267 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		243212B32233C2A600AEE267 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
-=======
-		243212AC222D63E400AEE267 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		243212AE222FCB3200AEE267 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
->>>>>>> data-save
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,11 +73,7 @@
 		2432127D2225B14D00AEE267 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				243212B0223119AB00AEE267 /* DataModel.xcdatamodeld */,
-=======
-				243212AB222D63E400AEE267 /* DataModel.xcdatamodeld */,
->>>>>>> data-save
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -95,11 +81,7 @@
 		2432127E2225B16F00AEE267 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				243212B32233C2A600AEE267 /* CategoryViewController.swift */,
-=======
-				243212AE222FCB3200AEE267 /* CategoryViewController.swift */,
->>>>>>> data-save
 				243212692225249C00AEE267 /* ToDoListViewController.swift */,
 			);
 			path = Controller;
@@ -197,14 +179,8 @@
 			files = (
 				243212B42233C2A600AEE267 /* CategoryViewController.swift in Sources */,
 				2432126A2225249C00AEE267 /* ToDoListViewController.swift in Sources */,
-<<<<<<< HEAD
 				243212B2223119AB00AEE267 /* DataModel.xcdatamodeld in Sources */,
 				243212682225249C00AEE267 /* AppDelegate.swift in Sources */,
-=======
-				243212AD222D63E400AEE267 /* DataModel.xcdatamodeld in Sources */,
-				243212682225249C00AEE267 /* AppDelegate.swift in Sources */,
-				243212AF222FCB3200AEE267 /* CategoryViewController.swift in Sources */,
->>>>>>> data-save
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,21 +382,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-<<<<<<< HEAD
 		243212B0223119AB00AEE267 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				243212B1223119AB00AEE267 /* DataModel.xcdatamodel */,
 			);
 			currentVersion = 243212B1223119AB00AEE267 /* DataModel.xcdatamodel */;
-=======
-		243212AB222D63E400AEE267 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				243212AC222D63E400AEE267 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = 243212AC222D63E400AEE267 /* DataModel.xcdatamodel */;
->>>>>>> data-save
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import CoreData
 import RealmSwift
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeViewController {
     
     var categories: Results<Category>?
     let realm = try! Realm()
@@ -30,14 +29,13 @@ class CategoryViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        // Создание ячейки таблицы на основе ячейки таблицы класса от которого наследуемся, в нашем случае это SwipeViewController
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name ?? "Category not added yet"
         
         return cell
     }
-    
-    
     
     //MARK: - TableView Delegate methods
     
@@ -133,5 +131,20 @@ class CategoryViewController: UITableViewController {
         
         tableView.reloadData()
     }
+    
+    //MARK: - Delete cell with SwipeCellKit methods
+    
+    override func updateModel(at indexPath: IndexPath) {
+        if let category = self.categories?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(category)
+                }
+            } catch {
+                print("Error deleting category \(error)")
+            }
+        }
+    }
+    
 
 }

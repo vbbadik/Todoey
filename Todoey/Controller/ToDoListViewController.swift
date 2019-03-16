@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class ToDoListViewController: SwipeViewController {
     
@@ -19,13 +20,27 @@ class ToDoListViewController: SwipeViewController {
     var items: Results<Item>?
     let realm = try! Realm()
 
-    
     @IBOutlet weak var searchBar: UISearchBar!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchBar.delegate = self
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        title = selectedCategory?.name
+        
+        guard let hexColor = selectedCategory?.color else { fatalError() }
+        
+        updateNavBar(withHexColor: hexColor)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        updateNavBar(withHexColor: "1D9BF6")
     }
 
     //MARK: - TableView DataSource methods
@@ -39,9 +54,19 @@ class ToDoListViewController: SwipeViewController {
         // Создание ячейки таблицы на основе ячейки таблицы класса от которого наследуемся, в нашем случае это SwipeViewController
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
-        if let item = items?[indexPath.row] {
+        if let item = items?[indexPath.row],
+            let itemsCount = items?.count,
+            let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(itemsCount)) {
+            
             cell.textLabel?.text = item.title
             cell.accessoryType = item.done ? .checkmark : .none
+            cell.backgroundColor = color
+            
+            // Изменение цвета текста (белый/черный) в зависимости от цвета ячейки
+            cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: color, isFlat: true)
+            // OR
+//            cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+            
         } else {
             cell.textLabel?.text = "No items added"
         }
@@ -129,6 +154,22 @@ class ToDoListViewController: SwipeViewController {
             } catch {
                 print("Error deleting item \(error)")
             }
+        }
+    }
+    
+    //MARK: - Navigaton Bar methods
+    
+    func updateNavBar(withHexColor hexColor: String) {
+        
+        if let color = UIColor(hexString: hexColor),
+            let navBar = navigationController?.navigationBar {
+            
+            // Изменение цвета текста (белый/черный) в зависимости от цвета ячейки
+            navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(color, returnFlat: true)]
+            navBar.barTintColor = color
+            navBar.tintColor = ContrastColorOf(color, returnFlat: true)
+            
+            searchBar.barTintColor = color
         }
     }
 }

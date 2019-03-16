@@ -14,17 +14,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         
+        // Миграция базы данных Realm
 //        Realm.Configuration.defaultConfiguration = Realm.Configuration(
-//            schemaVersion: 2,
+//            schemaVersion: 1,
 //            migrationBlock: { migration, oldSchemaVersion in
-//                if oldSchemaVersion < 2 {
+//                if oldSchemaVersion < 1 {
 //                    migration.enumerateObjects(ofType: Item.className(), { (oldObject, newObject) in
-//                        newObject!["dataCreated"] = Date()
+//                        newObject!["color"] = ""
 //                    })
 //                }
 //        })
